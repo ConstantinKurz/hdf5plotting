@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import h5py
@@ -11,6 +13,7 @@ import matplotlib.gridspec as gridspec
 from pylab import *
 import matplotlib.patches as patches
 home = os.environ["HOME"]
+
 nullfmt = NullFormatter()  # no labels
 
 
@@ -20,12 +23,12 @@ def get_data(df, it, rl):
     dat = df.get_reflevel_data(grid, iteration=it)
     return x, y, dat
 
-filename = home + "/masterarbeit/Hanauske_Tut_Out/collapse/alp.xy.h5"
+filename = home + "/simulations/alp.xy.h5"
 print "Opening dataset " + str(filename)
 datafilealp = hdf5.dataset(filename)
 print "Completed opening dataset"
 
-filename = home + "/masterarbeit/Hanauske_Tut_Out/collapse/rho.xy.h5"
+filename = home + "/simulations/rho.xy.h5"
 print "Opening dataset " + str(filename)
 datafilerho = hdf5.dataset(filename)
 print "Completed opening dataset"
@@ -48,8 +51,8 @@ plotmin = [0.5, 9]
 wcon = 0.2
 wcon1 = 0.5
 
-ianf = 1
-iend = 500
+ianf = 0
+iend = 100
 for it in range(ianf, iend):
     # Grid
     plt.figure(0)
@@ -58,7 +61,8 @@ for it in range(ianf, iend):
     ax2 = plt.subplot(gs[1])
 
     ivec = [it, it, it]
-    itr_list = datafilerho.iterations
+    itr_list = datafilealp.iterations
+    print(itr_list)
     # conver to ctu
     ctu_list = np.array(itr_list)
 
@@ -125,8 +129,9 @@ for it in range(ianf, iend):
             cbar = plt.colorbar(ye_col, ticks=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], ax=ax)
             cbar.set_label(r'$\rm \alpha $')
 
-    saveFig = "./pics/img-" + str(ivec[0] - ianf) + ".jpg"
+    saveFig = home + "/simulations/Plots/ssgtest" + str(ivec[0] - ianf) + ".jpg"
     plt.savefig(saveFig, dpi=300)
+#avconv -fra - i home + '/simulations/Plots/Kollaps_Hanauske_Tut-%01d.jpg' -s '2000x1200' alpharho.mp4
 # saveFig="./output/"+name2+"-"+name1+"-"+str(ivec[0])+"a.pdf"
 # plt.savefig(saveFig)
 # plt.show()
