@@ -22,12 +22,12 @@ def get_data(df, it, rl):
     dat = df.get_reflevel_data(grid, iteration=it)
     return x, y, dat
 
-filename = home + "/simulations/sim_g3k200_1501_nosph/alp.xy.h5"
+filename = home + "/simulations/test_dx0.1_sph3/output-0000/myeostest/alp.yz.h5"
 print "Opening dataset " + str(filename)
 datafilealp = hdf5.dataset(filename)
 print "Completed opening from dataset"
 
-filename = home + "/simulations/sim_g3k200_1501_nosph/rho.xy.h5"
+filename = home + "/simulations/test_dx0.1_sph3/output-0000/myeostest/rho.yz.h5"
 print "Opening dataset " + str(filename)
 datafilerho = hdf5.dataset(filename)
 print "Completed opening dataset"
@@ -70,10 +70,10 @@ for it in range(ianf, iend):
         print "Plotting at ", i
 
         ax.axis([-25, 25, -25, 25])
-        ax.set_ylabel(r'$\rm y \,[km]$')
-        ax.set_xlabel(r'$\rm x \,[km]$')
-
+        ax.set_ylabel(r'$\rm z \,[km]$')
+        ax.set_xlabel(r'$\rm y \,[km]$')
         itr = itr_list[i]
+
         ax.minorticks_on()
 
         if j == 0:
@@ -127,10 +127,10 @@ for it in range(ianf, iend):
             cbar = plt.colorbar(ye_col, ticks=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9], ax=ax)
             cbar.set_label(r'$\rm \alpha $')
 
-            saveFig = home + "/Videos/sim_g3k200_1501_nosph/picture" + str(ivec[0] - ianf) + ".png"
+            saveFig = home + "/Videos/test/dx_0.1_yz" + str(ivec[0] - ianf) + ".png"
     plt.savefig(saveFig, dpi=300)
     #plt.show()
 # saveFig="./output/"+name2+"-"+name1+"-"+str(ivec[0])+"a.pdf"
-# plt.savefig(saveFig)
+# plt.savefig(saveFig)(Pert_Amplitude[star] *
 # plt.show()
 plt.close()

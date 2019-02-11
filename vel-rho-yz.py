@@ -20,7 +20,7 @@ def get_data(df, it, rl):
     return x, y, dat
 
 
-namesim = home + "/simulations/myeosspherical/l2m2t10/yz"
+namesim = home + "/simulations/test_sphl1m0_pert0.5_0/output-0000/myeostest"
 name = "/vel[0]"
 filename = namesim + name + ".yz.h5"
 print "Opening dataset " + str(filename)
@@ -46,7 +46,7 @@ datafilerhoxy = hdf5.dataset(filename)
 print "Completed opening dataset"
 
 # define the colormap
-cmap = [plt.cm.gist_earth, plt.cm.afmhot]
+cmap = [plt.cm.inferno, plt.cm.afmhot]
 
 # units
 uc = 2.99792458 * 10 ** (10)
@@ -59,7 +59,7 @@ normalnuc = 2.705 * 10 ** (14)
 umrechnmasse = 1.98892 * 10 ** (30)
 
 # plot
-plotmax = [0.35, 16.5]
+plotmax = [.35, 16.5]
 plotmin = [0, 9.5]
 wcon = 0.3
 wcon1 = 3
@@ -79,7 +79,7 @@ for it in range(ianf, iend, 1):
     ctu_list = np.array(itr_list)
     timeperit = 4
     ms_list = timeperit * utime * ctu_list
-
+    print(ms_list)
     # for i in ivec:
     for j, ax in enumerate(plt.gcf().axes):
         i = ivec[j]
@@ -87,7 +87,7 @@ for it in range(ianf, iend, 1):
 
         ax.axis([-18, 18, -18, 18])
         ax.set_ylabel(r'$\rm y \,[km]$')
-        ax.set_xlabel(r'$\rm x \,[km]$')
+        ax.set_xlabel(r'$\rm z \,[km]$')
         ax.minorticks_on()
 
         if j == 0:
@@ -169,9 +169,10 @@ for it in range(ianf, iend, 1):
     ms = ms_list[i]
     ct = float("{0:.2f}".format(ms))
     ax.set_title(r'$\rm t= ' + str(ct) + '  \,ms$', fontsize=26)
-    saveFig = namesim + "/outputRhoVel/img-" + "{:0>3d}".format(ivec[0] - ianf) + ".jpg"
-    plt.savefig(saveFig, dpi=100, bbox_inches="tight", pad_inches=0.05, format="jpg")
-    saveFig = namesim + "/outputRhoVel/img-" + "{:0>3d}".format(ivec[0] - ianf) + ".pdf"
-    plt.savefig(saveFig, bbox_inches="tight", pad_inches=0.05, format="pdf")
+    saveFig = home + "/Videos/test/test" + "{:0>3d}".format(ivec[0] - ianf) + ".png"
+    plt.savefig(saveFig, dpi=100, bbox_inches="tight", pad_inches=0.05, format="png")
+
+    #saveFig = namesim + "/outputRhoVel/img-" + "{:0>3d}".format(ivec[0] - ianf) + ".pdf"
+    #plt.savefig(saveFig, bbox_inches="tight", pad_inches=0.05, format="pdf")
 # plt.show()
 plt.close()
